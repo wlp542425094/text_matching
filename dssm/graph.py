@@ -1,25 +1,15 @@
 import tensorflow as tf
-
-seq_length = 15
-char_embedding_size = 100
-learning_rate = 0.0005
-keep_prob = 0.7
-vocab_size = 7901
-class_size = 2
-epochs = 5
-batch_size = 100
-max_char_len = 15
-
+from text_matching.dssm import args
 
 class Graph:
     def __init__(self):
-        self.p = tf.placeholder(dtype=tf.int32, shape=(None, seq_length), name='p')
-        self.h = tf.placeholder(dtype=tf.int32, shape=(None, seq_length), name='h')
+        self.p = tf.placeholder(dtype=tf.int32, shape=(None, args.seq_length), name='p')
+        self.h = tf.placeholder(dtype=tf.int32, shape=(None, args.seq_length), name='h')
         self.y = tf.placeholder(dtype=tf.int32, shape=None, name='y')
 
         self.keep_prob = tf.placeholder(dtype=tf.float32, name='drop_rate')
 
-        self.embedding = tf.get_variable(dtype=tf.float32, shape=(vocab_size, char_embedding_size),
+        self.embedding = tf.get_variable(dtype=tf.float32, shape=(args.vocab_size,args.char_embedding_size),
                                          name='embedding')
         self.forward()
 
@@ -41,7 +31,7 @@ class Graph:
     def cosine(p, h):
         p_norm = tf.norm(p, axis=1, keepdims=True)
         h_norm = tf.norm(h, axis=1, keepdims=True)
-        
+
         cosine = tf.reduce_sum(tf.multiply(p, h), axis=1, keepdims=True) / (p_norm * h_norm)
 
         return cosine
@@ -49,7 +39,7 @@ class Graph:
     def forward(self):
         p_embedding = tf.nn.embedding_lookup(self.embedding, self.p)  # shape=(?, 15, 100), dtype=float32
         h_embedding = tf.nn.embedding_lookup(self.embedding, self.h)
-        
+
         p_context = self.fully_connect(p_embedding)
         h_context = self.fully_connect(h_embedding)
 
@@ -61,10 +51,10 @@ class Graph:
         self.train(logits)
 
     def train(self, logits):
-        y = tf.one_hot(self.y, class_size)
+        y = tf.one_hot(self.y, args.class_size)
         loss = tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=logits)
         self.loss = tf.reduce_mean(loss)
-        self.train_op = tf.train.AdamOptimizer(learning_rate).minimize(self.loss)
+        self.train_op = tf.train.AdamOptimizer(args.learning_rate).minimize(self.loss)
         prediction = tf.argmax(logits, axis=1)
         correct_prediction = tf.equal(tf.cast(prediction, tf.int32), self.y)
         self.acc = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
