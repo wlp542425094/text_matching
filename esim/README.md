@@ -5,6 +5,8 @@ ESIM模型主要是用来做文本推理的，给定一个前提premise p 推导
 
 参考代码：https://github.com/terrifyzhao/text_matching
 
+ESIM论文：https://arxiv.org/pdf/1609.06038.pdf
+
 模型网络：graph.py 
 
 模型配置：args.py
