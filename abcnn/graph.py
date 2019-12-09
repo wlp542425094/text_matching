@@ -62,24 +62,16 @@ class Graph:
         if self.abcnn2:
             attention_pool_euclidean = tf.sqrt(
                 tf.reduce_sum(tf.square(tf.transpose(p, perm=[0, 3, 1, 2]) - tf.transpose(h, perm=[0, 3, 2, 1])),
-                              axis=1))   # 欧氏距离
-            print("attention_pool_euclidean:",attention_pool_euclidean) #shape=(?, 17, 17)
+                              axis=1))   # 欧氏距离  #shape=(?, 17, 17)
             attention_pool_matrix = 1 / (attention_pool_euclidean + 1)  #shape=(?, 17, 17)
-            print("attention_pool_matrix:",attention_pool_matrix)
             p_sum = tf.reduce_sum(attention_pool_matrix, axis=2, keep_dims=True) # shape=(?, 17, 1)
             h_sum = tf.reduce_sum(attention_pool_matrix, axis=1, keep_dims=True) # shape=(?, 1, 17)
-            print("p_sum:",p_sum)
-            print("h_sum:",h_sum)
 
             p = tf.reshape(p, shape=(-1, p.shape[1], p.shape[2] * p.shape[3])) # shape=(?, 17, 50)
             h = tf.reshape(h, shape=(-1, h.shape[1], h.shape[2] * h.shape[3])) # shape=(?, 17, 50)
-            print("p:",p)
-            print("h:",h)
-
             p = tf.multiply(p, p_sum)   # shape=(?, 17, 50)
             h = tf.multiply(h, tf.matrix_transpose(h_sum)) # shape=(?, 17, 50)
-            print("p2:", p)
-            print("h2:", h)
+
         else:
             p = tf.reshape(p, shape=(-1, p.shape[1], p.shape[2] * p.shape[3]))  #shape=(?, 17, 50)
             h = tf.reshape(h, shape=(-1, h.shape[1], h.shape[2] * h.shape[3]))  #shape=
