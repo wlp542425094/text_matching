@@ -1,4 +1,4 @@
-ABCNN 论文地址：https://arxiv.org/pdf/1512.05193.pdf
+ABCNN [论文地址](https://arxiv.org/pdf/1512.05193.pdf)
 
 参考博文：https://blog.csdn.net/u012526436/article/details/90179481
 
