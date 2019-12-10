@@ -24,6 +24,7 @@
 
 
 测试集结果对比：
+
 模型 | loss | acc | 输入说明 | 论文地址
 :-: | :-: | :-: | :-: | :-: |
 DSSM | 0.7613157 | 0.6864 | 字向量 | [DSSM](https://posenhuang.github.io/papers/cikm2013_DSSM_fullversion.pdf) |
