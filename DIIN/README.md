@@ -5,3 +5,7 @@ Embedding Layer会把每一个词或者说段落转变为向量表示，和其�
 Encoding Layer的主要作用是将上一层的特征进行融合并进行encode
 
 Interaction Layer的主要目的是把P与H做一个相似度的计算，提取出其中的相关性，可以采用余弦相似度、欧氏距离等等，这里作者发现对位相乘的效果很好
+
+Feature Extraction Layer的任务正如其名，做特征提取。这一层论文主要采用的是CNN的结构，作者实验发现ResNet效果会好一些，但是最终还是选择了DenseNet，因为DenseNet能更好的保存参数，并且作者观察到ResNet如果把skip connection移除了模型就没法收敛了（ResNet的关键就在于skip connection不知道作者为什么要说明这一点）BN还会导致收敛变慢（这里应该是指针对当前这个模型来说）所以作者并没有采用ResNet。
+
+Output Layer 最后就是输出层了，全连接层+softmax层
