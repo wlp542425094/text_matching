@@ -1,5 +1,5 @@
 # text_matching
-文本匹配模型
+文本匹配模型,仅用于个人学习
 
 [参考博文](https://blog.csdn.net/u012526436/article/details/90179466)
 
@@ -35,4 +35,3 @@ DIIN | 0.48298636| 0.7694 | 字向量+动态词向量 | [DIIN](https://arxiv.org
 DRCN | 0.6549849 | 0.7811 | 字向量+静态词向量+动态词向量+是否有相同词 | [DRCN](https://arxiv.org/pdf/1805.11360.pdf) |
 BERT | 0.0 | 0.0 | 动态词向量 | [DRCN](https://arxiv.org/pdf/1805.11360.pdf) |
 
-以上测试结果可能不是模型的最优解，超参的选择也不一定是最优的，如果你想用到自己的实际工程中，请自行调整超参
